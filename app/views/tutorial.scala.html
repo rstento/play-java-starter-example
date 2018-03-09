@@ -1,0 +1,141 @@
+@()
+
+@main("Hello World") {
+
+
+  
+<section id="content" >
+  <div class="wrapper doc">
+  <article>
+  <h2>Implementing Hello World</h2>
+  
+   <p>To see how simple it is to work with Play, let's add a customized "Hello World" greeting to this tutorial app. </p>
+   <p>The main steps include:</p>
+   <ul>
+     <li><a href="#create">Create the Hello World page</a></li>
+     <li><a href="action">Add an action method</a></li>
+     <li><a href="route">Define a route</a></li>
+     <li><a href="customize">Customize the greeting</a></li>
+   <ul>
+  
+  <h3 id="create">Create the Hello World page</h3>
+  <p>Follow these steps to add a new Hello World page to this project:</p>
+  <ol>
+    <li>With any text editor, create a file named <code>hello.scala.html</code> and save it in the <code>app/views</code> directory of this project.</li>
+    <li>Add the following contents to the file:
+    <pre><code>
+    &commat;main("Hello") &lbrace;
+            
+    &lt;section id="content"&gt;
+      &lt;div class="wrapper doc"&gt;
+        &lt;article&gt;
+          &lt;h2&gt;Hello World!&lt;/h2&gt;
+        &lt;/article&gt;
+    &lt;/section&gt;
+   &rbrace;</code>
+   </pre>
+  </li></ol>
+  <p>This Twirl and HTML markup accomplishes the following:</p>
+  <ul>
+    <li>The <code>&commat;</code> sign tells the template engine to interpret what follows.</li>
+    <li>In this case, <code>&commat;main("Hello")</code> calls the main template, <code>main.scala.html</code> and passes it the page title of <code>Hello</code>.</li>
+    <li>The <code>content</code> section contains the <code>Hello World</code> greeting. The <code>main</code> template will insert this into the body of the page.</li>
+  </ul>
+  <p>Now we are ready to add an action method that will render the new page.</p>
+  
+  <h3 id="action">Add an action method</h3
+  <p>To add an action method for the new page:</p>
+  <ol>
+    <li>Navigate to the <code>controllers</code> directory and open the <code>HomeController.java</code> file.</li>
+    <li>Copy the <code>tutorial</code> method and paste it below the original <code>tutorial</code> method and above the end brace.</li>
+    <li>Change the name of the copied method from <code>tutorial</code> to <code>hello</code>.</li>
+    <li>Change the parameter in the return value of the <code>hello</code> action method to <code>views.html.hello.render</code>. The results should look like this:
+    <pre><code>
+    public Result hello() {
+        return ok(views.html.hello.render());
+    } </code>
+    </pre></li>
+    <li>Save <code>HomeController.java</code>.</li>
+  </ol>
+  <p>To have Play call the new action method when the browser requests the <code>Hello</code> page, we need to add a route that maps the page to the method.
+  <h3 id="route">Define a route</h3>
+  
+  <p>Define a route for the new <code>Hello</code> page:</p>
+  <ol>
+    <li>Open the <code>conf/routes</code> file.</li>
+    <li>Add the following line:
+     <pre><code>GET     /hello                      controllers.HomeController.hello</code></pre>
+    <li>Save the <code>routes</code> file.
+    <p>You are now ready to test the new page.</p></li>
+      <li>If you stopped the application for some reason, restart it with the <code>sbt run</code> command.</li>
+    <li>Enter the URL: <code>http://localhost:9000/hello</code> to view the results of your work. The browser should respond with something like the following:
+      <p><img src="assets/images/hello-world.png" alt="Hello World"/></p></li>
+  </ol>  
+  
+ <h3 id="customize">Customize the greeting</h3>
+  
+ <p>As the final part of this tutorial, we'll modify the <code>hello</code> page to accept an HTTP request parameter.  The steps include a deliberate mistake to demonstrate how Play provides useful feedback.</p>
+  
+ <p>To customize the <code>Hello World</code> greeting:  
+  <ol>
+    <li>In the <code>HomeController.java</code> file, modify the <code>hello</code> action method to accept a <code>name</code> parameter using the following code: 
+    <pre><code>
+    public Result hello(String name) {
+        return ok(views.html.hello.render());
+    } </code></pre></li>
+   <li>In the <code>routes</code> file, add a <code>(name: String)</code> parameter at the end of the <code>hello</code>:
+   <pre><code>
+   GET    /hello             controllers.HomeController.hello(name: String)</code></pre></li>
+  <li>In Twirl templates, all variables and their types must be declared. In the <code>hello.scala.html</code> file:
+    <ol>
+      <li>Insert a new line at the top of the file.</li>
+      <li>On that line, add an <code>&commat;</code> directive that declares the <code>name</code> parameter and its type:
+          <code>&commat;(name: String)</code>
+        </li> 
+      <li>To use the variable on the page, change the text in the &lt;h2&gt; heading from <code>Hello World!</code> to:
+          <code>&lt;h2&gt;Hello &commat;name!&lt;/h2&gt;</code></li>
+    </ol></li>
+
+  <li>In the browser, enter the following URL and pass in any name as a query parameter to the <code>hello</code> method:
+  <pre><code>http://localhost:9000/hello?name=MyName</code></pre></li>
+  <p>Play responds with a helpful compilation error that lets you know that the render method in the return value requires a typed parameter: 
+    <p><img src="assets/images/compilation-error.png" alt="Compilation error"/></p></li>
+            
+  <li>To fix this, modify the <code>hello</code> action method in <code>HomeController.java</code> so that the render method includes the <code>name</code> parameter: 
+    <pre><code>return ok(views.html.hello.render(name));</code></pre></li>
+  <li>Save the file and refresh the browser. The page should display a customized greeting similar to the following:
+    <p></p>
+    <p><img src="assets/images/hello-joe.png" alt="Compilation error fixed"/></p></li>
+</ol>
+<h3>Summary</h3>
+<p>Thanks for trying our tutorial. You learned how to use an action method, route, Twirl template, and input parameter to create a customized Hello World greeting! You experienced how template compilation makes it easier to identify and fix problems and how auto-reloading saves time. </p>
+<p>This was just a simple example to get you started. Next, try one that demonstrates what you'd like to learn next. See all of the Lightbend-managed examples on <a href="https://developer.lightbend.com/start/?group=play" target="_blank">Tech Hub</a>. The examples you can download cover the following topics:</p>
+<ul>
+  <li>Websockets</li>
+  <li>Secure sessions, SSL, and TLS</li>
+  <li>Streaming</li>
+  <li>Forms</li>
+  <li>REST API</li>
+  <li>Dependency injection</li>
+  <li>JPA</li>
+  <li>Ebeans</li>
+  <li>File uploads</li>
+</ul>
+  
+  
+  
+  
+      
+  
+
+
+    
+</article>
+<aside>
+  @commonSidebar()
+</aside>
+</div>
+
+</section>
+  
+}

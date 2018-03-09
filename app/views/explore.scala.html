@@ -1,0 +1,66 @@
+@()
+
+@main("Hello World") {
+  
+  <section id="content" >
+  <div class="wrapper doc">
+  <article>
+<h2>Play application overview</h2>
+    <p>This tutorial is implemented as a simple Play application that we can examine to start learning about Play. Let's first look at what happens at runtime. When you enter <code>http://localhost:9000</code> in your browser:
+    <ol>
+      <li>The browser requests the root <code>/</code> URI from the HTTP server using the GET method.</li> 
+      <li>The HTTP server forwards the request to Play.</li>
+      <li>Play resolves the request using the <code>routes</code> file, which maps URIs to controller action methods.</li> 
+      <li>The action method renders the index page, using 
+        <a href="https://www.playframework.com/documentation/2.6.x/JavaTemplates">Twirl templates</a>.</li>
+      <li>The HTTP server returns the response as an HTML page.</li> </ol>
+      
+      <p>At a high level, the flow looks something like this:</p> 
+      <p><img src="assets/images/request-response.png" alt="Request response flow"/></p>
+    <h3 id="explore">Explore the project</h3>
+      <p>Next, let's look at the tutorial project to locate the implementation for:
+      <ul>
+      <li>The controller action method that defines how to handle a request to the root URL.</li>
+      <li>The <code>routes</code> file that maps the browser request to the controller method.</li>
+      <li>The Twirl template that the action method calls to render the HTML markup. 
+      </ul></p>
+              
+      <p>Follow these steps to drill down into the source files:</p>
+      <p>Note: In the following procedures, for Windows shells, substitute <code>/</code> for <code>\</code> in path names.</p>
+
+      <ol> 
+        <li>Using a command window or GUI, look at the contents of the top-level project directory. The following directories contain application components: 
+          <ul><li>The <code>app</code> subdirectory contains directories for controllers and views, which will be familiar to those experienced with the Model View Controller (MVC) architecture.
+          Since this simple project does not need an external data repository, it does not contain a <code>model</code> directory, but this is where you would add it.</li> 
+          <li>The <code>public</code> subdirectory contains directories for images, javascript, and stylesheets.</li>
+          <li>The <code>conf</code> directory contains application configuration.</li></ul> 
+          <p>For details on the rest of the project's structure see 
+          <a href="https://www.playframework.com/documentation/2.6.x/Anatomy#The-Play-application-layout" target="blank">Anatomy of a Play Application</a>.</p> 
+          
+        <li>To locate the controller action method, navigate to the <code>app/controllers</code> project directory and open <code>HomeController.java</code> with your favorite text editor. <p>The <code>Homecontroller</code> class includes the <code>index</code> action method, as shown below. This is a very simple action method that invokes the <code>render()</code> method to generate an HTML page from the <code>index.scala.html</code> Twirl template file. </p>
+        
+        <pre>
+        <code>public Result index() {
+             return ok(views.html.index.render());
+            }</code>
+        </pre>
+      </li>
+      <li>To view the route that maps the browser request to the controller method, navigate to the project <code>conf</code> directory and open the <code>routes</code> file. <p>A route consists of an HTTP method, a path, and an action. This control over the URL schema makes it easy to design clean, human-readable, bookmarkable URLs. The following line maps a GET request for the root URL <code>/</code> to the <code>index</code> action in <code>HomeController.java</code>:</p>
+      <pre>
+        <code>    GET     /           controllers.HomeController.index </code>
+      </pre>
+    </li>    
+      <li>Navigate to the project <code>app/views</code> directory and open <code>index.scala.html</code> with a text editor. The <code>main</code> directive in this file calls the main template <code>main.scala.html</code> with the string <code>Welcome</code> to generate the page.</li>
+      <li>With a text editor, open <code>main.scala.html</code> to see how a <code>String</code> parameter sets the page title.</li>
+      </ol>
+
+<p>With this overview of the tutorial application, you are ready to <a href="@routes.HomeController.tutorial">add a "Hello World" greeting</a>.</p>    
+</article>
+<aside>
+  @commonSidebar()
+</aside>
+</div>
+
+</section>
+  
+}

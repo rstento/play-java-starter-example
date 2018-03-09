@@ -2,52 +2,46 @@
 
 # play-java-starter-example
 
-This is a starter application that shows how Play works.  Please see the documentation at https://www.playframework.com/documentation/latest/Home for more details.
+This application demonstrates how Play works and includes a Hello World tutorial.  Run the example as described below to view the tutorial.
 
-## Running
 
-Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
 
+## Prerequisites
+
+If you downloaded the example from github, make sure that you have the correct version of Java and <code>sbt</code> installed. If you downloaded a zip file from Lightbend [Tech Hub](https://developer.lightbend.com/start/?group=play), the <code>sbt-dist</code> directory includes a distribution of <code>sbt</code> so you don't have to install it separately. This example requires:
+
+* Java Software Developer's Kit (SE) 1.8 or higher
+* sbt 0.13.13 or higher
+
+To check your Java version, enter the following in a command window:
+
+```bash
+java -version
 ```
-sbt run
+
+To check your sbt version, enter the following in a command window:
+
+```bash
+sbt sbt-version
 ```
 
-And then go to http://localhost:9000 to see the running web application.
+If you do not have the required versions, follow these links to obtain them:
 
-## Controllers
+* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [sbt](http://www.scala-sbt.org/download.html)
 
-There are several demonstration files available in this template.
+## Run the example
 
-- HomeController.java:
+1. In a command window, change into the project directory, for example: `cd play-java-starter`
 
-  Shows how to handle simple HTTP requests.
+1. Enter: `sbt run`
 
-- AsyncController.java:
+    The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends on the speed of your connection.
 
-  Shows how to do asynchronous programming when handling a request.
+1. After the message `Server started, ...` displays, enter the following URL in a browser:
 
-- CountController.java:
+    <http://localhost:9000>
+    
+    The welcome page displays the Hello World tutorial.
 
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
 
-## Components
-
-- Module.java:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.java:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-## Filters
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.
