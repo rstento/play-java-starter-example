@@ -16,7 +16,7 @@
      <li><a href="action">Add an action method</a></li>
      <li><a href="route">Define a route</a></li>
      <li><a href="customize">Customize the greeting</a></li>
-   <ul>
+   </ul>
   
   <h3 id="create">Create the Hello World page</h3>
   <p>Follow these steps to add a new Hello World page to this project:</p>
@@ -34,7 +34,9 @@
     &lt;/section&gt;
    &rbrace;</code>
    </pre>
-  </li></ol>
+  </li>
+   <li>Save the file.</li>
+ </ol>
   <p>This Twirl and HTML markup accomplishes the following:</p>
   <ul>
     <li>The <code>&commat;</code> sign tells the template engine to interpret what follows.</li>
@@ -43,13 +45,11 @@
   </ul>
   <p>Now we are ready to add an action method that will render the new page.</p>
   
-  <h3 id="action">Add an action method</h3
+  <h3 id="action">Add an action method</h3>
   <p>To add an action method for the new page:</p>
   <ol>
     <li>Navigate to the <code>controllers</code> directory and open the <code>HomeController.java</code> file.</li>
-    <li>Copy the <code>tutorial</code> method and paste it below the original <code>tutorial</code> method and above the end brace.</li>
-    <li>Change the name of the copied method from <code>tutorial</code> to <code>hello</code>.</li>
-    <li>Change the parameter in the return value of the <code>hello</code> action method to <code>views.html.hello.render</code>. The results should look like this:
+    <li>Under the <code>tutorial</code> method and before the closing brace, add the following method:
     <pre><code>
     public Result hello() {
         return ok(views.html.hello.render());
@@ -64,7 +64,7 @@
   <ol>
     <li>Open the <code>conf/routes</code> file.</li>
     <li>Add the following line:
-     <pre><code>GET     /hello                      controllers.HomeController.hello</code></pre>
+    <pre><code>GET     /hello             controllers.HomeController.hello</code></pre>
     <li>Save the <code>routes</code> file.
     <p>You are now ready to test the new page.</p></li>
       <li>If you stopped the application for some reason, restart it with the <code>sbt run</code> command.</li>
@@ -76,8 +76,8 @@
   
  <p>As the final part of this tutorial, we'll modify the <code>hello</code> page to accept an HTTP request parameter.  The steps include a deliberate mistake to demonstrate how Play provides useful feedback.</p>
   
- <p>To customize the <code>Hello World</code> greeting:  
-  <ol>
+ <p>To customize the <code>Hello World</code> greeting:</p>
+<ol>
     <li>In the <code>HomeController.java</code> file, modify the <code>hello</code> action method to accept a <code>name</code> parameter using the following code: 
     <pre><code>
     public Result hello(String name) {
@@ -97,11 +97,13 @@
     </ol></li>
 
   <li>In the browser, enter the following URL and pass in any name as a query parameter to the <code>hello</code> method:
-  <pre><code>http://localhost:9000/hello?name=MyName</code></pre></li>
+  <pre><code>http://localhost:9000/hello?name=MyName</code></pre>
   <p>Play responds with a helpful compilation error that lets you know that the render method in the return value requires a typed parameter: 
     <p><img src="assets/images/compilation-error.png" alt="Compilation error"/></p></li>
-            
-  <li>To fix this, modify the <code>hello</code> action method in <code>HomeController.java</code> so that the render method includes the <code>name</code> parameter: 
+    
+  <li>To fix the compliation error:</p>
+  <ol>
+    <li> modify the <code>hello</code> action method in <code>HomeController.java</code> so that the render method includes the <code>name</code> parameter: 
     <pre><code>return ok(views.html.hello.render(name));</code></pre></li>
   <li>Save the file and refresh the browser. The page should display a customized greeting similar to the following:
     <p></p>
@@ -109,7 +111,7 @@
 </ol>
 <h3>Summary</h3>
 <p>Thanks for trying our tutorial. You learned how to use an action method, route, Twirl template, and input parameter to create a customized Hello World greeting! You experienced how template compilation makes it easier to identify and fix problems and how auto-reloading saves time. </p>
-<p>This was just a simple example to get you started. Next, try one that demonstrates what you'd like to learn next. See all of the Lightbend-managed examples on <a href="https://developer.lightbend.com/start/?group=play" target="_blank">Tech Hub</a>. The examples you can download cover the following topics:</p>
+<p>This was just a simple example to get you started. Next, pick one that demonstrates functionality of interest to you. See all of the Lightbend-managed examples on <a href="https://developer.lightbend.com/start/?group=play" target="_blank">Tech Hub</a>. The examples you can download cover the following topics:</p>
 <ul>
   <li>Websockets</li>
   <li>Secure sessions, SSL, and TLS</li>
